@@ -1,0 +1,64 @@
+#!/bin/bash
+function partition_linux(){
+echo -e "       Partition: "
+read partitie
+echo -e "       Mountpoint: "
+read mountpoint
+echo -e "       Type: "
+read type
+echo `blkid $partitie | awk '{print $2}'` $mountpoint $type defaults 0 0 >> /etc/fstab
+echo -e "VOM SCRIE URMATOARELE: "
+echo `blkid $partitie | awk '{print $2}'`
+mount -a
+}
+function partition_windows(){
+echo -e "       Partition: "
+read partitie
+echo -e "       Mountpoint: "
+read mountpoint
+echo -e "       Type: "
+read type
+
+echo "$partitie $mountpoint $type defaults 0 0" >> /etc/fstab
+mount -a
+
+}
+show_menu()
+{
+       clear
+       echo -e ""
+       echo "   ************ FSTABX **************"
+       echo "   Created by 4rodeb@gmail.com"
+       echo "   Version 0.1"
+       echo "   1. Write partition Linux in /etc/fstab"
+       echo "   2. Write partition Windows in /etc/fstab"
+       echo "   3. Exit"
+       echo "   *********************************"
+}
+
+
+input()
+{
+
+       local choice
+       read -p "Select the option from above menu: " choice
+
+
+       case $choice in
+               1) partition_linux;;
+               2) partition_windows;;
+               3) exit 0;;
+               *) echo "Enter Valid Option!!"
+                       read -p "Press any key to Continue...."
+
+               esac
+       }
+
+
+while true
+do
+       show_menu
+       input
+done
+
+
