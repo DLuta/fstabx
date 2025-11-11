@@ -21,16 +21,29 @@ echo "$partitie $mountpoint $type defaults 0 0" >> /etc/fstab
 mount -a
 
 }
+function swapp(){
+read -p "swap? " swapp
+
+mkswap $swapp
+swapon $swapp
+echo `blkid $swapp | awk '{print $2}'` swap swap defaults 1 1 >> /etc/fstab
+mount -a
+
+echo "          List swap: "
+swapon  -s
+sleep 15
+}
 show_menu()
 {
        clear
        echo -e ""
        echo "   ************ FSTABX **************"
        echo "   Created by D.Luta 4rodeb@gmail.com"
-       echo "   Version 0.1"
-       echo "   1. Write partition Linux in /etc/fstab"
-       echo "   2. Write partition Windows in /etc/fstab"
-       echo "   3. Exit"
+       echo "   Version 0.2"
+       echo "   1. Add partition Linux in /etc/fstab"
+       echo "   2. Add partition Windows in /etc/fstab"
+       echo "   3. Add partition swap in /etc/fstab"
+       echo "   4. Exit"
        echo "   *********************************"
 }
 
@@ -45,7 +58,8 @@ input()
        case $choice in
                1) partition_linux;;
                2) partition_windows;;
-               3) exit 0;;
+               3) swapp;;
+               4) exit 0;;
                *) echo "Enter Valid Option!!"
                        read -p "Press any key to Continue...."
 
