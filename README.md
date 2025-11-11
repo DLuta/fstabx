@@ -1,0 +1,2 @@
+# fstabx
+/etc/fstab
