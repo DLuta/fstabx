@@ -22,7 +22,7 @@ mount -a
 
 }
 function swapp(){
-read -p "swap? " swapp
+read -p "       swap? " swapp
 
 mkswap $swapp
 swapon $swapp
